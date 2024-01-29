@@ -1,0 +1,25 @@
+{
+  "name": "bigboi",
+  "version": "0.0.1",
+  "description": "Big Sets and Big Maps! Get around the 2 ^ 24 item limit in JS Sets and Maps.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --max-old-space-size=8192 node_modules/.bin/jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [],
+  "author": "Tomas Savigliano <ralusek@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.1",
+    "@types/node": "^18.16.3",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist"
+  ]
+}
