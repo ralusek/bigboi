@@ -1,4 +1,4 @@
-import { BigBoiMap } from '../dist';
+import { BigBoiMapSimple } from '../dist';
 
 function forEachIterable(iterator: IterableIterator<any>, callback: (value: any) => void) {
   while (true) {
@@ -8,24 +8,15 @@ function forEachIterable(iterator: IterableIterator<any>, callback: (value: any)
   }
 }
 
-describe('BigBoiMap basic interface', () => {
+describe('BigBoiMapSimple basic interface', () => {
   it('should have a comparable interface to Map.add and Map.has', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
     }
-
-    // Unrelated to test, just a sanity check ensuring that buckets are deterministic
-    // and that we have keys in both buckets for the remaining tests.
-    // For what it's worth, a, b go to bucket 0 and c goes to bucket 1.
-    // This was just lucky, because sets are "unordered" but actually iterable by insertion order.
-    // So the fact that they got bucketed this way via hashing is just a coincidence, but
-    // allows for the .forEach and iterator tests to be easy to test/compare between set and BigBoiMap.
-    expect(bigMap.getBucketSize(0)).toEqual(2);
-    expect(bigMap.getBucketSize(1)).toEqual(1);
 
     // Has
     expect(bigMap.has('a')).toEqual(map.has('a'));
@@ -39,7 +30,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.get', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
@@ -57,7 +48,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.delete', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
@@ -82,7 +73,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.clear', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
@@ -102,7 +93,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.forEach', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
@@ -130,7 +121,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.entries', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
@@ -148,7 +139,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.keys', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);
@@ -166,7 +157,7 @@ describe('BigBoiMap basic interface', () => {
   it('should have a comparable interface to Map.values', async () => {
     const values = [['a', 1], ['b', 2], ['c', 3]] as const;
     const map = new Map<string, number>();
-    const bigMap = new BigBoiMap<string, number>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigMap = new BigBoiMapSimple<string, number>();
     for (const [key, value] of values) {
       map.set(key, value);
       bigMap.set(key, value);

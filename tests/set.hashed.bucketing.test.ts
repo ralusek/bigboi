@@ -1,8 +1,8 @@
-import { BigBoiSet } from '../dist';
+import { BigBoiSetHashed } from '../dist';
 
-describe('BigBoiSet bucketing functionality', () => {
+describe('BigBoiSetHashed bucketing functionality', () => {
   it('should correctly bucket serial keys into the buckets', async () => {
-    const set = new BigBoiSet({ maxKeys: 20_000_000 });
+    const set = new BigBoiSetHashed({ maxKeys: 20_000_000 });
     expect(set.numBuckets).toBe(2);
     for (let i = 0; i < 20_000_000; i++) {
       if (i % 1_000_000 === 0) console.log('Adding items', i, 'of 20,000,000');
@@ -19,7 +19,7 @@ describe('BigBoiSet bucketing functionality', () => {
   });
 
   it('should correctly bucket random keys into the buckets', async () => {
-    const set = new BigBoiSet({ maxKeys: 20_000_000 });
+    const set = new BigBoiSetHashed({ maxKeys: 20_000_000 });
     expect(set.numBuckets).toBe(2);
     for (let i = 0; i < 20_000_000; i++) {
       if (i % 1_000_000 === 0) console.log('Adding items', i, 'of 20,000,000');

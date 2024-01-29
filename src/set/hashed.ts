@@ -9,7 +9,7 @@ import buildDefaultGetKeyInt from '../utils/buildDefaultGetKeyInt';
 import determineBucket from '../utils/determineBucket';
 import getBucketsEntriesIterator from '../utils/getBucketsEntriesIterator';
 
-export class BigBoiSet <T extends string>{
+export class BigBoiSetHashed <T extends string>{
   public getKeyInt: (key: T) => number;
   public numBuckets!: number;
   public size!: number;

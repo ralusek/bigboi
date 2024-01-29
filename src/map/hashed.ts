@@ -9,7 +9,7 @@ import buildDefaultGetKeyInt from '../utils/buildDefaultGetKeyInt';
 import determineBucket from '../utils/determineBucket';
 import getBucketsEntriesIterator from '../utils/getBucketsEntriesIterator';
 
-export class BigBoiMap<K extends string, V extends any> {
+export class BigBoiMapHashed<K extends string, V extends any> {
   public getKeyInt: (key: K) => number;
   public numBuckets!: number;
   public size!: number;

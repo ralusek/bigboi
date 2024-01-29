@@ -1,4 +1,4 @@
-import { BigBoiSet } from '../dist';
+import { BigBoiSetHashed } from '../dist';
 
 function forEachIterable(iterator: IterableIterator<any>, callback: (value: any) => void) {
   while(true) {
@@ -8,11 +8,11 @@ function forEachIterable(iterator: IterableIterator<any>, callback: (value: any)
   }
 }
 
-describe('BigBoiSet basic interface', () => {
+describe('BigBoiSetHashed basic interface', () => {
   it('should have a comparable interface to Set.add and Set.has', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -23,7 +23,7 @@ describe('BigBoiSet basic interface', () => {
     // For what it's worth, a, b go to bucket 0 and c goes to bucket 1.
     // This was just lucky, because sets are "unordered" but actually iterable by insertion order.
     // So the fact that they got bucketed this way via hashing is just a coincidence, but
-    // allows for the .forEach and iterator tests to be easy to test/compare between set and BigBoiSet.
+    // allows for the .forEach and iterator tests to be easy to test/compare between set and BigBoiSetHashed.
     expect(bigSet.getBucketSize(0)).toEqual(2);
     expect(bigSet.getBucketSize(1)).toEqual(1);
 
@@ -39,7 +39,7 @@ describe('BigBoiSet basic interface', () => {
   it('should have a comparable interface to Set.delete', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -64,7 +64,7 @@ describe('BigBoiSet basic interface', () => {
   it('should have a comparable interface to Set.clear', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -84,7 +84,7 @@ describe('BigBoiSet basic interface', () => {
   it('should have a comparable interface to Set.forEach', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -102,7 +102,7 @@ describe('BigBoiSet basic interface', () => {
   it('should have a comparable interface to Set.entries', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -120,7 +120,7 @@ describe('BigBoiSet basic interface', () => {
   it('should have a comparable interface to Set.keys', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -138,7 +138,7 @@ describe('BigBoiSet basic interface', () => {
   it('should have a comparable interface to Set.values', async () => {
     const values = ['a', 'b', 'c'];
     const set = new Set<string>();
-    const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+    const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
     for (const value of values) {
       set.add(value);
       bigSet.add(value);
@@ -153,10 +153,10 @@ describe('BigBoiSet basic interface', () => {
     expect(setValues).toEqual(bigSetValues);
   });
 
-  describe('BigBoiSet custom functions', () => {
+  describe('BigBoiSetHashed custom functions', () => {
     it('should have a .reduce that behaves as it does on an array', () => {
       const values = ['a', 'b', 'c'];
-      const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+      const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
       for (const value of values) {
         bigSet.add(value);
       }
@@ -168,7 +168,7 @@ describe('BigBoiSet basic interface', () => {
 
     it('should have a .map that behaves as it does on an array', () => {
       const values = ['a', 'b', 'c'];
-      const bigSet = new BigBoiSet<string>({ maxKeys: 20_000_000 }); // 2 buckets
+      const bigSet = new BigBoiSetHashed<string>({ maxKeys: 20_000_000 }); // 2 buckets
       for (const value of values) {
         bigSet.add(value);
       }

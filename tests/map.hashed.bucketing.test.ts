@@ -1,8 +1,8 @@
-import { BigBoiMap } from '../dist';
+import { BigBoiMapHashed } from '../dist';
 
-describe('BigBoiMap bucketing functionality', () => {
+describe('BigBoiMapHashed bucketing functionality', () => {
   it('should correctly bucket serial keys into the buckets', async () => {
-    const map = new BigBoiMap({ maxKeys: 20_000_000 });
+    const map = new BigBoiMapHashed({ maxKeys: 20_000_000 });
     expect(map.numBuckets).toBe(2);
     for (let i = 0; i < 20_000_000; i++) {
       if (i % 1_000_000 === 0) console.log('Adding items', i, 'of 20,000,000');
@@ -19,7 +19,7 @@ describe('BigBoiMap bucketing functionality', () => {
   });
 
   it('should correctly bucket random keys into the buckets', async () => {
-    const map = new BigBoiMap({ maxKeys: 20_000_000 });
+    const map = new BigBoiMapHashed({ maxKeys: 20_000_000 });
     expect(map.numBuckets).toBe(2);
     for (let i = 0; i < 20_000_000; i++) {
       if (i % 1_000_000 === 0) console.log('Adding items', i, 'of 20,000,000');

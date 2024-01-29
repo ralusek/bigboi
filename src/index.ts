@@ -1,2 +1,5 @@
-export { BigBoiMap } from './map';
-export { BigBoiSet } from './set';
+export { BigBoiMapHashed } from './map/hashed';
+export { BigBoiSetHashed } from './set/hashed';
+
+export { BigBoiMapSimple } from './map/simple';
+export { BigBoiSetSimple } from './set/simple';

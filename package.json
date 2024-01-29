@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "node --max-old-space-size=8192 node_modules/.bin/jest",
+    "test": "node --max-old-space-size=65536 node_modules/.bin/jest",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
