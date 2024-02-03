@@ -13,10 +13,45 @@ or
 ## Usage
 Except for constructor, same interface as `Set` and `Map`
 
+
+# Simple vs Hashed
+There are 2 variants of the `Set` and `Map` available.
+
 ```typescript
-const bigSet = new BigBoiSet({
-  maxKeys: 500_000_000, // 500 million
-});
+import {
+  BigBoiSetSimple,
+  BigBoiMapSimple,
+  BigBoiSetHashed,
+  BigBoiMapHashed,
+}
+```
+
+## Simple:
+The Simple variants will simply push items into a Set/Map until there is no room, then move onto the next one, and so on. The lookup process is naive, and will simply go through the buckets of items to check if a given key is present. This means that any given lookup has a worst case of `(total items) / (2 ^ 24)`. Bear in mind, lookups happen on reads/checks, but also on insertions, as we don't want to add the same item to multiple different buckets.
+
+### Simple Pros:
+- Preserves insertion order
+- Don't have to specify item count ahead of time
+- Despite being naive, is actually faster up until ~500 million items
+- Keys can be any keys used in native JS `Map` or `Set`
+
+### Simple Cons:
+- Reads/writes slow down exponentially, but again, this only starts to penalize after ~500 million items
+
+## Hashed:
+The Hashed variants will hash the keys and get a deterministic and uniformly distributed bucket assignment for each item. This means that there is O(1) reads and writes, allowing this solution to scale to an arbitrarily high number of items limited only by the available memory in the runtime environment.
+
+### Hashed Pros:
+- O(1) reads and writes allowing performant scaling to arbitrary size.
+
+### Hashed Cons:
+- The hashing of keys is computationally intensive. Because of this, despite being a scalable solution, up until ~500 million items, this implementation is slower
+- Only string keys
+- No insertion order preserved
+
+
+```typescript
+const bigSet = new BigBoiSetSimple();
 
 // Add elements
 for (let i = 0; i < 20_000_000; i++) {
@@ -44,9 +79,7 @@ bigSet.clear();
 ```
 
 ```typescript
-const bigMap = new BigBoiMap({
-  maxKeys: 500_000_000, // 500 million
-});
+const bigMap = new BigBoiMapSimple();
 
 // Add elements
 for (let i = 0; i < 20_000_000; i++) {
@@ -75,13 +108,6 @@ bigMap.values();
 // Clear
 bigMap.clear();
 ```
-
-
-## Limitations
-- While `Set` and `Map` allow objects as keys, `BigBoiSet` and `BigBoiMap` are exclusively to be keyed with strings.
-- While `Set` and `Map` are technically unordered structures, they can be iterated in insertion order. `BigBoiSet` and `BigBoiMap` will not be iterated in insertion order.
-- `BigBoiSet` and `BigBoiMap` require you to specify the maximum number of items that will be stored in them, as this will be used to create the appropriate number of buckets
-- The maximum number of items cannot exceed `Number.MAX_SAFE_INTEGER` (9,007,199,254,740,991). The number of items is used to calculate the number of buckets needed, and while exceeding this figure can still allow for accurate calculations of such a figure, the lack of guaranteed precision places this as the limit.
 
 
 # Contributing
